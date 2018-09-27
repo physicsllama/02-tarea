@@ -1,2 +1,5 @@
-# 02-tarea
-Tarea nro. 2, entrega 4 Oct. 23:59 hrs
+# Tarea nro. 2
+
+Fecha de entrega: 4 de Octubre a las 23:59 hrs.
+
+(Enunciado en documento `enunciado.pdf`).
