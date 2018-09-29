@@ -10,3 +10,11 @@ import numpy as np
 import scipy.integrate as integrate
 
 L = 20
+x0 = L / 2 
+
+def catenaria(x,x0,a):
+    ''' define funcion catenaria que depende de x, con parametro a
+    centrada en x0
+    '''
+    f = a / 2 * (np.exp((x-x0)/2) + np.exp(-(x-x0)/2))
+    return f
