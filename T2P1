@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 29 01:44:02 2018
+
+@author: nicolasvaldes
+"""
+
+import numpy as np
+import scipy.integrate as integrate
+
+L = 20
