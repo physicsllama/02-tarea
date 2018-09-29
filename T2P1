@@ -18,3 +18,4 @@ def catenaria(x,x0,a):
     '''
     f = a / 2 * (np.exp((x-x0)/2) + np.exp(-(x-x0)/2))
     return f
+
