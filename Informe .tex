@@ -35,10 +35,31 @@
 \section*{Problema 1}
 \subsection*{Introducción} 
 
+La catenaria %stuff about chains, etc
 
+Su ecuación está dada por 
+\begin{align}
+y(x) = a\cosh\left(\frac{x-x_0}{a}\right),
+\end{align}
+donde
 \subsection*{Metodología} 
 
+Escogemos $x_0=0$ por conveniencia. Por el enunciado sabemos que la diferencia de altura entre el punto medio y un extremo es $H = 7.5$ metros. La distancia horizontal entre estos dos puntos es $L = 10$ metros. Entonces tenemos la ecuación 
+\begin{align}
+y(L)-y(0) = H \implies F(a) = 0,
+\end{align}
+donde 
+\begin{align}
+F(a)\equiv a\cosh\left(\frac{L}{a}\right) - a - H.
+\end{align}
+Entonces para encontrar $a$, debemos encontrar raíces de la función $F$. 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=3in]{ejemplo}
+\caption{Gráfico de $F(a)$}
+\end{figure}
 
+Viendo el gráfico que hicimos de $F(a)$, está claro que el método de Newton no se debe usar. Se ve, primero, que diverge la función en $a=0$, lo cuál podría causar problemas. Además, la derivada de la función es un número muy pequeño en la zona donde parece haber una raíz de la función. Dadas estas dos cosas, lo mejor parece ser utilizar el método de la bisección, comenzando con dos números positivos para evitar una posible raíz en el lado negativo, y para evitar la divergencia de $F$. 
 
 \subsection*{Resultados} 
 
@@ -46,6 +67,13 @@
 
 \subsection*{Conclusiones} 
 
+%why newton's method
+No usamos el método de Newton para encontrar raíces de $F$ porque al tomar su derivada con respecto a $a$, notamos que $F'(a)=0$ cuando 
+\begin{align}
+\tanh\left(\frac{L}{a}\right) = \frac{a}{L}
+\end{align}
+Entonces a pesar de que la convergencia del método de Newton es más rápida que la del método de bisección, este segundo método es más seguro en este caso. 
+$F(a)$ no es una función periódica, y es una función cuya derivada siempre es positiva, salvo por los puntos $a=0$, $a=\infty$. Dado esto, el método de Newton no debería tener problemas al funcionar. Además, su convergencia es cuadrática a diferencia del método de bisección, por lo que es más eficiente. 
 
 \section*{Problema 2}
 

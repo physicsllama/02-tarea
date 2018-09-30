@@ -8,14 +8,29 @@ Created on Sat Sep 29 01:44:02 2018
 
 import numpy as np
 import scipy.integrate as integrate
+import matplotlib.pyplot as plt
 
-L = 20
-x0 = L / 2 
+L = 10
+H = 7.5 
 
-def catenaria(x,x0,a):
+def catenaria(x,a):
     ''' define funcion catenaria que depende de x, con parametro a
-    centrada en x0
     '''
-    f = a / 2 * (np.exp((x-x0)/2) + np.exp(-(x-x0)/2))
+    f = a / 2 * (np.exp((x)/a) + np.exp(-(x)/a))
     return f
+
+def F(a):
+    return catenaria(L,a)-catenaria(0,a)-H
+
+X = np.linspace(-1,1,100)
+
+plt.plot(X,F(X))
+plt.xlabel("$a$ (m)")
+plt.ylabel("$F(a)$ (m)")
+plt.savefig("ejemplo.png")
+plt.show()
+
+def ceros(F):
+    return 0
+
 
