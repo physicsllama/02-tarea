@@ -8,6 +8,7 @@ Created on Sat Sep 29 01:44:02 2018
 
 import numpy as np
 import scipy.integrate as integrate
+from scipy.misc import derivative
 import matplotlib.pyplot as plt
 
 L = 10
@@ -27,10 +28,58 @@ X = np.linspace(-1,1,100)
 plt.plot(X,F(X))
 plt.xlabel("$a$ (m)")
 plt.ylabel("$F(a)$ (m)")
-plt.savefig("ejemplo.png")
+plt.savefig("ejemplo.png",dpi=400)
+plt.clf()
+
+
+
+def ceros(f,a,b,Nmax=100):
+    N = 1
+    x1 = a
+    x2 = b
+    while N < Nmax:
+        xm = 1 / 2 * (x1 + x2)
+        if f(xm) == 0:
+            return xm
+        elif f(a) == 0:
+            return a
+        elif f(b) == 0:
+            return b
+        elif f(x1)*f(xm) > 0:
+            x1 = xm 
+        elif f(x2) * f(xm) > 0:
+            x2 = xm
+        N = N + 1
+    return xm
+
+X = np.linspace(6.5,8.5,1000)
+Y = np.linspace(-1,1.5,10)
+
+def vertical():
+    return ceros(F,1,10)
+
+plt.plot(X,F(X), label = "$F(a)$")
+plt.plot(X,np.zeros(len(X)),label = "$F(a)=0$ m")
+plt.plot(np.ones(len(Y))*vertical(),Y, label = "$a \simeq $" + str(np.around(ceros(F,6,8),3))+ "m")
+plt.xlabel("$a$ (m)")
+plt.ylabel("$F(a)$ (m)")
+plt.legend()
+plt.savefig("ejemplo2.png",dpi=400)
 plt.show()
 
-def ceros(F):
-    return 0
+A = ceros(F,7,8)
 
+def Catenaria(x):
+    return catenaria(x,A)
 
+def Catenaria_derivada(x):
+    return derivative(Catenaria,x)
+
+def Integrando(x):
+    return np.sqrt(1 + Catenaria_derivada(x) ** 2)
+
+dominio = np.linspace(0,L,100)
+
+Largo = 2 * integrate.quad(Integrando,0,L)[0]
+
+print(Largo)
