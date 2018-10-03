@@ -60,7 +60,7 @@ def vertical():
 
 plt.plot(X,F(X), label = "$F(a)$")
 plt.plot(X,np.zeros(len(X)),label = "$F(a)=0$ m")
-plt.plot(np.ones(len(Y))*vertical(),Y, label = "$a \simeq $" + str(np.around(ceros(F,6,8),3))+ "m")
+plt.plot(np.ones(len(Y))*vertical(),Y, label = r"$a \approx $" + str(np.around(ceros(F,6,8),3))+ "m")
 plt.xlabel("$a$ (m)")
 plt.ylabel("$F(a)$ (m)")
 plt.legend()

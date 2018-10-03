@@ -8,10 +8,92 @@ Created on Sat Sep 29 02:02:44 2018
 
 import numpy as np 
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import scipy.optimize as op
 
 def F1(x,y):
     return x ** 4 + y ** 4 - 15
 
 def F2(x,y):
     return x ** 3 * y - x * y ** 3 - y / 2 - 1.388
+
+xx = np.linspace(-3,3,100)
+yy = np.linspace(-3,3,100)
+
+X, Y = np.meshgrid(xx,yy)
+
+Z1 = F1(X,Y)
+Z2 = F2(X,Y)
+
+plt.imshow(Z1, origin='lower', cmap=cm.viridis, extent=(-3, 3, -3, 3))
+
+levels = [-9,-6,-3,0,3,6,9]
+
+plt.xlabel("$x$")
+plt.ylabel("$y$")
+
+plt.contour(X,Y,Z1,levels)
+plt.contour(X,Y,Z2,levels)
+plt.savefig("zeros2.png",dpi=400)
+plt.clf()
+
+levels = [0]
+
+plt.xlabel("$x$")
+plt.ylabel("$y$")
+
+plt.contour(X,Y,Z1,levels)
+plt.contour(X,Y,Z2,levels)
+
+plt.savefig("zeros1.png",dpi=400)
+
+
+def x_param(t):
+    return np.sign(np.sin(t)) * (15 * np.sin(t) ** 2) ** (1/4)
+
+def y_param(t):
+    return np.sign(np.cos(t)) * (15 * np.cos(t) ** 2) ** (1/4)
+
+def F2_param(t):
+    return F2(x_param(t),y_param(t))
+
+t0 = 0 
+t1 = np.pi/4 + 0.5
+t2 = np.pi/2 + 0.5
+t3 = 3 * np.pi/4 + 0.5
+t4 = np.pi + 0.5
+t5 = 5 * np.pi/4 + 0.5 
+t6 = 3 * np.pi/2 + 0.5
+t7 = 7 * np.pi/4 + 0.5
+t8 = 2 * np.pi
+
+cero1 = op.bisect(F2_param,t0,t1)
+cero2 = op.bisect(F2_param,t1,t2)
+cero3 = op.bisect(F2_param,t2,t3)
+cero4 = op.bisect(F2_param,t3,t4)
+cero5 = op.bisect(F2_param,t4,t5)
+cero6 = op.bisect(F2_param,t5,t6)
+cero7 = op.bisect(F2_param,t6,t7)
+cero8 = op.bisect(F2_param,t7,t8)
+
+
+
+coord_cero1 = [x_param(cero1),y_param(cero1)]
+coord_cero2 = [x_param(cero2),y_param(cero2)]
+coord_cero3 = [x_param(cero3),y_param(cero3)]
+coord_cero4 = [x_param(cero4),y_param(cero4)]
+coord_cero5 = [x_param(cero5),y_param(cero5)]
+coord_cero6 = [x_param(cero6),y_param(cero6)]
+coord_cero7 = [x_param(cero7),y_param(cero7)]
+coord_cero8 = [x_param(cero8),y_param(cero8)]
+print(coord_cero1)
+print(coord_cero2)
+print(coord_cero3)
+print(coord_cero4)
+print(coord_cero5)
+print(coord_cero6)
+print(coord_cero7)
+print(coord_cero8)
+
+
 

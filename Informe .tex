@@ -6,6 +6,8 @@
 
 \usepackage{graphicx} 
 
+\usepackage[spanish]{babel}
+
 \usepackage{fancyhdr}
 
 \usepackage{subcaption}
@@ -15,6 +17,10 @@
 \setlength\headheight{10pt} 
 
 \renewcommand{\figurename}{Figura}
+
+\usepackage{booktabs}
+
+\newcommand{\sgn}{\text{sgn}}
 
 
 \pagestyle{fancy}
@@ -61,10 +67,16 @@ Entonces para encontrar $a$, debemos encontrar raíces de la función $F$.
 
 Viendo el gráfico que hicimos de $F(a)$, está claro que el método de Newton no se debe usar. Se ve, primero, que diverge la función en $a=0$, lo cuál podría causar problemas. Además, la derivada de la función es un número muy pequeño en la zona donde parece haber una raíz de la función. Dadas estas dos cosas, lo mejor parece ser utilizar el método de la bisección, comenzando con dos números positivos para evitar una posible raíz en el lado negativo, y para evitar la divergencia de $F$. 
 
+%scipy integrate and derivative 
+
+
 \subsection*{Resultados} 
 
-El valor de $a$ encontrado fue  
-Y el largo necesario para la cuerda es 
+El valor de $a$ encontrado fue  aproximadamente 7.667 m, y el largo $\ell$ necesario para la cuerda es 26.202 m. 
+\begin{align}
+a = 
+\ell = 
+\end{align}
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=4in]{ejemplo2}
@@ -73,31 +85,80 @@ Y el largo necesario para la cuerda es
 
 \subsection*{Conclusiones} 
 
-%why newton's method
 No usamos el método de Newton para encontrar raíces de $F$ porque al tomar su derivada con respecto a $a$, notamos que $F'(a)=0$ cuando 
 \begin{align}
 \tanh\left(\frac{L}{a}\right) = \frac{a}{L}
 \end{align}
 Entonces a pesar de que la convergencia del método de Newton es más rápida que la del método de bisección, este segundo método es más seguro en este caso. 
 
+%resultado para L tiene sentido 
+
+%PLOT CATENARY! 
 \section*{Problema 2}
 
 \subsection*{Introducción} 
 
+%problema de encontrar ceros de funciones multivaluadas en general, ceros simultaneos 
 
-
+Las funciones de interés en este problema son 
+\begin{align}
+F_1(x,y) &= x^4+y^4 - 15 \\
+F_2(x,y)&= x^3y-xy^3-y/2 -1.388
+\end{align}
 \subsection*{Metodología} 
 
+Como indica el enunciado y como se ve en la Figura \ref{ceros}, el nivel cero de la función $F_1$ es una curva cerrada. Entonces para encontrar los ceros simultáneos de las funciones, basta con recorrer esta curva y ver en qué puntos $F_2$ se hace cero. 
+
+Una forma paramétrica de expresar la curva $F_1(x,y)=0$ es 
+\begin{align}
+x(t) &= \sgn(\sin(t))\sqrt[4]{15\sin^2(t))}\\
+y(t) &= \sgn(\cos(t)) \sqrt[4]{15\cos^2(t)},
+\end{align}
+donde el $x(t)$ está indicado en el enunciado, y el $y(t)$ se puede deducir por la identidad trigonométrica fundamental. El factor de $\sqrt[4]{15}$ es para cancelar el $-15$ al final de la función. Se puede verificar fácilmente entonces que al reemplazar esta curva en $F_1(x,y)$, se obtiene 0. Aquí el parámetro $t\in [0,2\pi]$. 
+
+Entonces la idea es reemplazar estos valores de $x(t)$, $y(t)$ en $F_2(x,y)$, para evaluar la función solamente en la curva para la cual $F_1$ es cero. Al encontrar los $t$ donde se anula $F_2$, podemos reemplazar éstos en $x(t)$, $y(t)$ para tener los puntos explícitos. 
+
+Usamos el método de la bisección para hacer esto. Notamos de la figura \ref{ceros} que hay 8 ceros relevantes, entonces hay que tener cuidado con los valores iniciales $a$ y $b$ en la búsqueda de ceros. 
 
 \subsection*{Resultados} 
 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=4in]{zeros1} 
+\caption{Ceros de $F_1(x,y)$ y $F_2(x,y)$} \label{ceros}
+\end{figure}
 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=4in]{zeros2}
+\caption{Gráfico de Contorno de las Funciones}
+\end{figure}
 
+En la Tabla 1 se encuentran las coordenadas $(x,y)$ de las distintas raíces simultáneas de $F_1$ y $F_2$. Se colocan con solo 3 decimales de precisión; para mayor precisión se pueden ver los resultados del código. 
+\begin{table}[ht!]
+\centering
+\begin{tabular}{ccc}
+ Raíz &$x$  &$y$  \\ 
+ \hline \hline 
+  1 & 1.76 & 1.52 \\
+  2 & 1.97 & 0.20 \\
+  3 & 1.62 & $-$1.68 \\
+  4 & 0.05 & $-$1.97 \\
+  5 & $-$1.69 & $-$1.62 \\
+  6 & $-$1.97 & $-$0.17 \\
+  7 & $-$1.51 & 1.77 \\
+  8 & $-$0.32 & 1.97 \\
+  \bottomrule
+\end{tabular}
+\end{table}
 
 
 \subsection*{Conclusiones} 
 
+%usé bisección porque hay varios ceros, si tengo cuidado con a y b todo ok, pero con newton ??? 
+%mejor: quizas decir que fue porque derivadas son chicas? graficar F2_param para ver si esto es cierto! 
 
+%valores de $t$ para cada cero los encontré de forma visual 
 
 \section*{Mensaje Secreto} 
 {\it
