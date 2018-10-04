@@ -55,6 +55,7 @@ def ceros(f,a,b,Nmax=100):
 X = np.linspace(6.5,8.5,1000)
 Y = np.linspace(-1,1.5,10)
 
+
 def vertical():
     return ceros(F,1,10)
 
@@ -67,7 +68,9 @@ plt.legend()
 plt.savefig("ejemplo2.png",dpi=400)
 plt.show()
 
-A = ceros(F,7,8)
+A = ceros(F,7,8,1000)
+
+print(A)
 
 def Catenaria(x):
     return catenaria(x,A)

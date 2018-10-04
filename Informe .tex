@@ -41,16 +41,14 @@
 \section*{Problema 1}
 \subsection*{Introducción} 
 
-La catenaria %stuff about chains, etc
-
-Su ecuación está dada por 
+La catenaria es una curva de gran importancia en la vida real, dado que representa la forma que toma una cuerda o cadena colgando entre dos puntos fijos. En particular a nosotros nos interesa en este problema porque una compañía nos pide calcular el largo que se requiere para hacer cables para torres de tensión. La ecuación de la catenaria está dada por 
 \begin{align}
 y(x) = a\cosh\left(\frac{x-x_0}{a}\right),
 \end{align}
-donde
+donde $a$ es un parámetro que vamos a determinar, $x_0$ es el centro de la catenaria, $y$ representa la altura, y $x$ representa la distancia horizontal desde $x=0$. 
 \subsection*{Metodología} 
-
-Escogemos $x_0=0$ por conveniencia. Por el enunciado sabemos que la diferencia de altura entre el punto medio y un extremo es $H = 7.5$ metros. La distancia horizontal entre estos dos puntos es $L = 10$ metros. Entonces tenemos la ecuación 
+Primero hay que encontrar $a$ dados los datos del problema. 
+Escogemos $x_0=0$ por conveniencia. Por el enunciado sabemos que la diferencia de altura entre el punto medio y un extremo es $H =$ 7.5 metros. La distancia horizontal entre estos dos puntos es $L = 10$ metros. Entonces tenemos la ecuación 
 \begin{align}
 y(L)-y(0) = H \implies F(a) = 0,
 \end{align}
@@ -58,25 +56,24 @@ donde
 \begin{align}
 F(a)\equiv a\cosh\left(\frac{L}{a}\right) - a - H.
 \end{align}
-Entonces para encontrar $a$, debemos encontrar raíces de la función $F$. 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=4in]{ejemplo}
-\caption{Gráfico de $F(a)$}
-\end{figure}
+Entonces para encontrar $a$, debemos encontrar raíces de la función $F$. Se utiliza el método de la bisección para encontrar dichas raíces por razones discutidas en las conclusiones. Este método consiste en tener un punto inicial $A$ y otro final $B$, $B>A$. La raíz de $F$ debe estar entre $A$ y $B$; esto se aseguró usando un gráfico de $F$ para ver aproximadamente el intervalo donde se encuentra la raíz. Se utilizó $A=7$, $B=8$. 
 
-Viendo el gráfico que hicimos de $F(a)$, está claro que el método de Newton no se debe usar. Se ve, primero, que diverge la función en $a=0$, lo cuál podría causar problemas. Además, la derivada de la función es un número muy pequeño en la zona donde parece haber una raíz de la función. Dadas estas dos cosas, lo mejor parece ser utilizar el método de la bisección, comenzando con dos números positivos para evitar una posible raíz en el lado negativo, y para evitar la divergencia de $F$. 
+Se define $m = \frac{1}{2}( A + B)$. Luego se evalúa $F(A)*F(m)$, y $F(B)*F(m)$. Si ninguno ($A$, $B$, o $m$) es la raíz, uno de estos valores debe ser positivo y el otro negativo. Si es negativo significa que la raíz se encuentra entre esos dos valores. Entonces por ejemplo si $F(A)*F(m)<0$, la raíz está en $[A,m]$. Estas posibilidades se evalúan con un {\it if}. Si se cumple $F(A)*F(m)<0$, definimos $B=m$ para un segundo paso de este mismo proceso. Se reitera esto con un {\it while} (aquí se hizo 100 veces). Se devuelve el valor $m$, que es aproximadamente la raíz de $F$. 
 
-%scipy integrate and derivative 
+Teniendo $a$, se tiene una forma explícita para la curva de la catenaria. Se toma una derivada de la función usando scipy, luego se define la función $\sqrt{1+y'(x)^2}$, la cual se integra con scipy para determinar el largo de la curva. 
+
 
 
 \subsection*{Resultados} 
 
-El valor de $a$ encontrado fue  aproximadamente 7.667 m, y el largo $\ell$ necesario para la cuerda es 26.202 m. 
+El valor de $a$ encontrado fue  aproximadamente 7.67 m, y el largo $\ell$ necesario para la cuerda es 26.20 m. Más precisamente, 
 \begin{align}
-a = 
-\ell = 
+a &\simeq  \text{7.667012405668327 m} \\
+\ell &\simeq \text{26.20190045304408 m}
 \end{align}
+
+En la Figura 1 se encuentra un gráfico que muestra dónde se ubica el cero de $F(a)$. 
+
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=4in]{ejemplo2}
@@ -84,16 +81,21 @@ a =
 \end{figure}
 
 \subsection*{Conclusiones} 
+Viendo el gráfico que hicimos de $F(a)$ en la Figura 2, está claro que el método de Newton no se debe usar. Se ve, primero, que diverge la función en $a=0$, lo cuál podría causar problemas. Además, la derivada de la función es un número muy pequeño en la zona donde parece haber una raíz de la función. Dadas estas dos cosas, lo mejor parece ser utilizar el método de la bisección, comenzando con dos números positivos para evitar una posible raíz en el lado negativo, y para evitar la divergencia de $F$. 
 
-No usamos el método de Newton para encontrar raíces de $F$ porque al tomar su derivada con respecto a $a$, notamos que $F'(a)=0$ cuando 
-\begin{align}
-\tanh\left(\frac{L}{a}\right) = \frac{a}{L}
-\end{align}
-Entonces a pesar de que la convergencia del método de Newton es más rápida que la del método de bisección, este segundo método es más seguro en este caso. 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=4in]{ejemplo}
+\caption{Gráfico de $F(a)$}
+\end{figure}
 
-%resultado para L tiene sentido 
+Entonces a pesar de que la convergencia del método de Newton es más rápida que la del método de la bisección, en este caso el método de la bisección es más seguro. Notamos que el resultado para $\ell$ tiene sentido, ya que el mínimo largo debe ser 20 metros, lo cual corresponde a una cuerda totalmente tensa entre las dos torres. Como la cuerda cuelga una cierta cantidad, el largo de aproximadamente 26 metros es razonable. 
 
-%PLOT CATENARY! 
+
+%plot catenary? 
+
+
+
 \section*{Problema 2}
 
 \subsection*{Introducción} 
@@ -105,11 +107,10 @@ Las funciones de interés en este problema son
 F_1(x,y) &= x^4+y^4 - 15 \\
 F_2(x,y)&= x^3y-xy^3-y/2 -1.388
 \end{align}
+Buscamos sus ceros simultáneos. La estrategia es graficar las funciones, y notar que una tiene ceros en una curva cerrada. Luego se encuentran los ceros de la otra función a lo largo de esta curva usando el método de la bisección. 
 \subsection*{Metodología} 
 
-Como indica el enunciado y como se ve en la Figura \ref{ceros}, el nivel cero de la función $F_1$ es una curva cerrada. Entonces para encontrar los ceros simultáneos de las funciones, basta con recorrer esta curva y ver en qué puntos $F_2$ se hace cero. 
-
-Una forma paramétrica de expresar la curva $F_1(x,y)=0$ es 
+Como indica el enunciado y como se ve en la Figura \ref{ceros}, el nivel cero de la función $F_1$ es una curva cerrada. Entonces para encontrar los ceros simultáneos de las funciones, basta con recorrer esta curva y ver en qué puntos $F_2$ se hace cero. Una forma paramétrica de expresar la curva $F_1(x,y)=0$ es 
 \begin{align}
 x(t) &= \sgn(\sin(t))\sqrt[4]{15\sin^2(t))}\\
 y(t) &= \sgn(\cos(t)) \sqrt[4]{15\cos^2(t)},
@@ -118,9 +119,11 @@ donde el $x(t)$ está indicado en el enunciado, y el $y(t)$ se puede deducir por 
 
 Entonces la idea es reemplazar estos valores de $x(t)$, $y(t)$ en $F_2(x,y)$, para evaluar la función solamente en la curva para la cual $F_1$ es cero. Al encontrar los $t$ donde se anula $F_2$, podemos reemplazar éstos en $x(t)$, $y(t)$ para tener los puntos explícitos. 
 
-Usamos el método de la bisección para hacer esto. Notamos de la figura \ref{ceros} que hay 8 ceros relevantes, entonces hay que tener cuidado con los valores iniciales $a$ y $b$ en la búsqueda de ceros. 
+Usamos el método de la bisección para hacer esto. Notamos de la Figura \ref{ceros} que hay 8 ceros relevantes, entonces hay que tener cuidado con los valores iniciales $a$ y $b$ en la búsqueda de ceros. La forma de escoger estos valores se basó en el análisis cualitativo de la Figura 3. La idea fue analizar entre $t_1=0$, y $t_2=\pi/4+0.5$ para el primer cero en la esquina superior derecha. Para el segundo cero, entre $t_2$  y $t_3 = \pi/2+0.5$. Así sucesivamente se encontraron los valores de $a$ y $b$ razonables para cada cero de la función $F_2$. 
 
 \subsection*{Resultados} 
+
+En la Tabla 1 se encuentran las coordenadas $(x,y)$ de las distintas raíces simultáneas de $F_1$ y $F_2$. Se colocan con solo 3 decimales de precisión; para mayor precisión se pueden ver los resultados del código. Se adjunta en la Figura 4 un gráfico de contorno de las funciones porque es bonito. 
 
 \begin{figure}[ht!]
 \centering
@@ -134,7 +137,6 @@ Usamos el método de la bisección para hacer esto. Notamos de la figura \ref{cero
 \caption{Gráfico de Contorno de las Funciones}
 \end{figure}
 
-En la Tabla 1 se encuentran las coordenadas $(x,y)$ de las distintas raíces simultáneas de $F_1$ y $F_2$. Se colocan con solo 3 decimales de precisión; para mayor precisión se pueden ver los resultados del código. 
 \begin{table}[ht!]
 \centering
 \begin{tabular}{ccc}
@@ -152,14 +154,16 @@ En la Tabla 1 se encuentran las coordenadas $(x,y)$ de las distintas raíces simu
 \end{tabular}
 \end{table}
 
+\newpage
 
 \subsection*{Conclusiones} 
 
-%usé bisección porque hay varios ceros, si tengo cuidado con a y b todo ok, pero con newton ??? 
-%mejor: quizas decir que fue porque derivadas son chicas? graficar F2_param para ver si esto es cierto! 
+Es importante destacar la importancia de graficar problemas antes de resolverlos, para adquirir un conocimiento cualitativo sobre su comportamiento. Muchas veces, como en esta ocasión, se puede llegar a la solución de un problema complejo, usando métodos conocidos para problemas más simples. La idea para hacer esto se encontró por la estructura gráfica del problema. 
 
-%valores de $t$ para cada cero los encontré de forma visual 
+Se usó el método de la bisección porque el gráfico de $F_2(t)$ se asemeja a una función sinusoidal. Estas funciones son complicadas con el método de Newton, porque uno se puede saltar entre distintos ceros y no conseguir el buscado. Con el método de bisección es más fácil estar seguro del intervalo al cual pertenece el cero buscado. 
 
+
+\newpage
 \section*{Mensaje Secreto} 
 {\it
 ``In the beginning the Universe was created. This has made a lot of

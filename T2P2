@@ -46,6 +46,7 @@ plt.contour(X,Y,Z1,levels)
 plt.contour(X,Y,Z2,levels)
 
 plt.savefig("zeros1.png",dpi=400)
+plt.clf()
 
 
 def x_param(t):
@@ -56,6 +57,10 @@ def y_param(t):
 
 def F2_param(t):
     return F2(x_param(t),y_param(t))
+
+T = np.linspace(-3,3,100)
+
+plt.plot(T,F2_param(T))
 
 t0 = 0 
 t1 = np.pi/4 + 0.5
